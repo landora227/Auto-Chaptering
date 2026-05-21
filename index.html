@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>视频切镜检测</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>视频切镜检测</h1>
+      <p>
+        ① 找 BGM 断点静音段 ② 段内找画面切换。开头 <strong>10 秒</strong> 不计入。
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="panel panel-upload zone-peach">
+        <p class="zone-label">导入与检测</p>
+        <div class="upload-zone" id="drop-zone">
+          <input id="video-input" type="file" accept="video/*" hidden />
+          <div class="upload-icon" aria-hidden="true">↑</div>
+          <p class="upload-title">拖入视频，或点击选择文件</p>
+          <p class="upload-hint">支持 MP4、MOV、WebM 等 · 本地处理，不上传服务器</p>
+          <label for="video-input" class="btn btn-primary">选择视频</label>
+        </div>
+        <div id="file-meta" class="file-meta" hidden></div>
+
+        <div class="controls" id="controls" hidden>
+          <div class="control-row">
+            <label for="sensitivity" title="越高越容易判定为静音、画面变化越易检出">检测灵敏度</label>
+            <input type="range" id="sensitivity" min="1" max="100" value="65" />
+            <span id="sensitivity-val" class="control-val">65</span>
+          </div>
+          <div class="control-row">
+            <label for="min-gap">最短镜头间隔（秒）</label>
+            <input type="range" id="min-gap" min="1" max="50" value="70" step="1" />
+            <span id="min-gap-val" class="control-val">7.0</span>
+          </div>
+          <div class="actions">
+            <button type="button" id="btn-analyze" class="btn btn-primary">开始检测</button>
+            <button type="button" id="btn-cancel" class="btn btn-tonal" hidden>取消</button>
+            <button type="button" id="btn-export-csv" class="btn btn-tonal" disabled>导出 CSV</button>
+            <button type="button" id="btn-export-json" class="btn btn-tonal" disabled>导出 JSON</button>
+          </div>
+        </div>
+
+        <div id="progress-wrap" class="progress-wrap" hidden>
+          <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+          <p id="progress-text" class="progress-text">准备中…</p>
+        </div>
+      </section>
+
+      <section class="panel panel-preview zone-blue">
+        <p class="zone-label">视频预览</p>
+        <div class="video-stage">
+          <svg class="video-waves" viewBox="0 0 800 420" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              class="wave wave-back"
+              d="M0,280 C120,220 200,320 320,260 480,300 640,200 800,240 L800,420 L0,420 Z"
+            />
+            <path
+              class="wave wave-mid"
+              d="M0,310 C140,360 260,280 400,330 520,290 660,340 800,300 L800,420 L0,420 Z"
+            />
+            <path
+              class="wave wave-front"
+              d="M0,350 C100,320 220,380 360,340 500,370 680,320 800,360 L800,420 L0,420 Z"
+            />
+          </svg>
+          <div class="video-wrap">
+            <video id="video" controls playsinline></video>
+          </div>
+          <p id="video-placeholder" class="video-placeholder">导入视频后在此预览</p>
+        </div>
+        <p id="current-hint" class="current-hint" hidden></p>
+        <p class="video-keys-hint">空格 播放/暂停 · ← → 前一帧/后一帧 · ， 。 后退/前进 3 秒</p>
+      </section>
+
+      <section class="panel panel-results zone-cream">
+        <div class="results-header">
+          <div class="results-header-top">
+            <h2>切镜时间点 <span id="cut-count" class="badge">0</span></h2>
+            <div class="results-actions">
+              <button type="button" id="btn-add-current" class="btn btn-tonal btn-sm" disabled>
+                标记当前时间码
+              </button>
+              <button type="button" id="btn-copy-timecodes" class="btn btn-accent-copy btn-sm" disabled>
+                复制全部时间码
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <tbody id="results-body">
+              <tr class="empty-row">
+                <td colspan="5">导入视频并开始检测后，结果将显示在这里</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <canvas id="analysis-canvas" hidden></canvas>
+    <script src="./app.js"></script>
+  </body>
+</html>
