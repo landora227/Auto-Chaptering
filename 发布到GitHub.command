@@ -4,11 +4,11 @@ echo "=========================================="
 echo "  视频切镜检测 · 发布到 GitHub Pages"
 echo "=========================================="
 echo ""
-echo "请先在 github.com 创建空仓库，例如：shot-cut-detector"
+GH_USER="landora227"
+GH_REPO="Auto-Chaptering"
+echo "目标仓库: https://github.com/${GH_USER}/${GH_REPO}"
+echo "（请确保已在 GitHub 创建该空仓库）"
 echo ""
-read -p "你的 GitHub 用户名: " GH_USER
-read -p "仓库名（默认 shot-cut-detector）: " GH_REPO
-GH_REPO=${GH_REPO:-shot-cut-detector}
 
 if ! command -v git &>/dev/null; then
   echo "未找到 git，请先安装 Xcode Command Line Tools"
@@ -29,6 +29,6 @@ git push -u origin main
 echo ""
 echo "推送完成后，到仓库 Settings → Pages → Source 选 GitHub Actions"
 echo "部署成功后访问："
-echo "  https://${GH_USER}.github.io/${GH_REPO}/"
+echo "  https://landora227.github.io/Auto-Chaptering/"
 echo ""
 read -p "按回车关闭…"

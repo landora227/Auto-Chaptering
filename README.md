@@ -6,23 +6,20 @@
 
 部署完成后，访问地址示例：
 
-- **GitHub Pages**：`https://<你的用户名>.github.io/shot-cut-detector/`
+- **GitHub Pages**：`https://landora227.github.io/Auto-Chaptering/`
 - **Netlify / Vercel**：控制台会显示分配的 `*.netlify.app` 或 `*.vercel.app` 域名
 
 ## 发布方式（任选其一）
 
 ### 方式 A：GitHub Pages（推荐，免费）
 
-1. 在 [GitHub](https://github.com/new) 新建仓库，例如 `shot-cut-detector`
+1. 在 [GitHub](https://github.com/new) 新建仓库 `Auto-Chaptering`（若尚未创建）
 2. 在本目录执行：
 
 ```bash
 cd shot-cut-detector
-git init
-git add .
-git commit -m "发布视频切镜检测工具"
 git branch -M main
-git remote add origin https://github.com/<你的用户名>/shot-cut-detector.git
+git remote add origin https://github.com/landora227/Auto-Chaptering.git
 git push -u origin main
 ```
 
