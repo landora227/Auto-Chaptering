@@ -24,8 +24,9 @@ git push -u origin main
 ```
 
 3. 打开仓库 **Settings → Pages → Build and deployment**
-   - Source 选 **GitHub Actions**
-4. 等待 Actions 跑完（约 1 分钟），即可用 Pages 链接访问
+   - Source 选 **GitHub Actions**（若 Actions 失败，工作流会自动尝试开启 Pages）
+4. 打开 **Actions** 标签，确认 **Deploy to GitHub Pages** 为绿色 ✓
+5. 访问：**https://landora227.github.io/Auto-Chaptering/**
 
 ### 方式 B：Netlify 拖拽（最快，无需命令行）
 
